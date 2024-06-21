@@ -1,6 +1,6 @@
 ---
 - name: cache artisan
-  command: "cd {{ laravel_app_path }}/current && su -c '/usr/bin/php artisan config:cache' {{ laravel_deploy_user }}"
+  command: "cd {{ laravel_app_path }} && su -c '/usr/bin/php artisan config:cache' {{ laravel_deploy_user }}"
   ignore_errors: True
   tags:
     - password

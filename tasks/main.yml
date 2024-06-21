@@ -57,6 +57,6 @@
   - name: Add cron job for laravel
     cron:
       name: Laravel Periodic Tasks
-      job: "cd {{ laravel_app_path }}/current && /usr/bin/php artisan schedule:run >> /dev/null 2>&1"
+      job: "cd {{ laravel_app_path }} && /usr/bin/php artisan schedule:run >> /dev/null 2>&1"
   become: true
     
