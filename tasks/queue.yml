@@ -1,0 +1,13 @@
+- name: copy in queue-worker.service.j2 file
+  template:
+    src: "queue-worker.service.j2"
+    dest: "/etc/systemd/system/queue-worker.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+- name: use systemd to enable queue-worker on reboot
+  systemd:
+    name: queue-worker
+    enabled: yes
+    daemon_reload: yes
+    state: started

@@ -1,0 +1,13 @@
+# laravel-horizon.service
+[Unit]
+Description=Laravel Horizon
+After=network.target
+
+[Service]
+User={{ laravel_service_user }}
+Group={{ laravel_service_group }}
+Restart=always
+ExecStart=/usr/bin/php {{laravel_app_path}}artisan horizon
+
+[Install]
+WantedBy=multi-user.target

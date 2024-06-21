@@ -1,0 +1,13 @@
+# laravel-horizon.service
+[Unit]
+Description=Laravel Queue Worker
+After=network.target
+
+[Service]
+User={{ laravel_service_user }}
+Group={{ laravel_service_group }}
+Restart=always
+ExecStart=/usr/bin/php {{laravel_app_path}}artisan queue:work --sleep 0.1 --tries=3 --daemon --env=production
+
+[Install]
+WantedBy=multi-user.target

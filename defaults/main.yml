@@ -1,2 +1,56 @@
 ---
-# defaults file for umn_sample_role
+laravel_deploy_user: 
+laravel_deploy_group:
+laravel_service_user: "{{ laravel_deploy_user}}"
+laravel_service_group: "{{ laravel_deploy_group }}"
+
+laravel_appname: "Sample App"
+laravel_app_path: 
+laravel_env: local
+laravel_secret_key: 
+laravel_app_debug: false
+hostname: 
+db_hostname: 
+db_port: 3306
+db_database:
+db_username:
+db_password:
+broadcast_driver: file
+cache_driver: file
+session_driver: file 
+session_lifetime: 240
+queue_driver: file
+mail_hostname: smtp.umn.edu
+sentry_dsn: ""
+
+laravel_require_horizon: false
+laravel_require_queue: false
+laravel_require_oracle: false
+
+laravel_cron_failure_address: 
+
+php_version: 83
+php_packages: 
+  - "php{{ php_version }}"
+  - "php{{ php_version }}-php-cli"
+  - "php{{ php_version }}-php-common"
+  - "php{{ php_version }}-php-devel"
+  - "php{{ php_version }}-php-mysqlnd"
+  - "php{{ php_version }}-php-opcache"
+  - "php{{ php_version }}-php-pecl-apcu"
+  - "php{{ php_version }}-syspaths"
+  - "php{{ php_version }}-php-redis"
+  - "php{{ php_version }}-php-process"
+  - "{{ 'php' + php_version|string + '-php-oci8' if laravel_require_oracle | bool else '' }}"
+
+php_enablerepo: "remi"
+php_webserver_daemon: "nginx"
+php_enable_php_fpm: true
+php_fpm_pool_user: "nginx"
+php_fpm_pool_group: "nginx"
+php_fpm_daemon: "php{{php_version}}-php-fpm"
+php_conf_paths: 
+  - "/etc/opt/remi/php{{php_version}}"
+php_extension_conf_paths: 
+  - "/etc/opt/remi/php{{php_version}}/php.d"
+php_fpm_pool_conf_path: "/etc/opt/remi/php{{php_version}}/php-fpm.d/www.conf"

@@ -1,2 +1,62 @@
 ---
 # tasks file for umn_sample_role
+- block:
+  - name: "Oracle instant client"
+    yum:
+      name:
+        - "https://download.oracle.com/otn_software/linux/instantclient/2112000/el9/oracle-instantclient-basic-21.12.0.0.0-1.el9.x86_64.rpm"
+        - "https://download.oracle.com/otn_software/linux/instantclient/2112000/el9/oracle-instantclient-devel-21.12.0.0.0-1.el9.x86_64.rpm"
+      disable_gpg_check: true
+      state: "present"
+    when: laravel_require_oracle
+  - name: "Include the geerlingguy.php role"
+    ansible.builtin.include_role:
+      name: geerlingguy.php
+  - name: "Install nodejs repo"
+    shell: "curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -"
+  - name: "Install node 20"
+    yum:
+      name: "nodejs"
+      state: "present"
+  - name: "Create a /var/www/html/shared/storage and set it to 777"
+    file:
+      path: "/var/www/html/shared/storage"
+      state: directory
+      owner: "{{ laravel_deploy_user  }}"
+      group: "{{ laravel_deploy_group  }}"
+      mode: "0777"
+  - name: "Configure SElinux so that nginx can write to /var/www/html/<release>/storage"
+    sefcontext:
+      target: "/var/www/html/shared/storage/(/.*)?"
+      setype: "httpd_sys_rw_content_t"
+      state: "present"
+  - name: "configure SElinux so that nginx can write to /var/www/html/<release>/storage"
+    sefcontext:
+      target: "/var/www/html/releases/[^/]*/storage/(/.*)?"
+      setype: "httpd_sys_rw_content_t"
+      state: "present"
+  - name: copy in laravel env file
+    template:
+      src: "env.j2"
+      dest: "/var/www/html/shared/.env"
+      owner: "{{ laravel_deploy_user  }}"
+      group: "{{ laravel_deploy_group  }}"
+      mode: "0644"
+    notify:
+      - cache artisan
+  - name: include horizon
+    include_tasks: horizon.yml
+    when: laravel_require_horizon
+  - name: include queue worker
+    include_tasks: queue.yml
+    when: laravel_require_queue
+  - name: Email cron failure to us
+    cronvar:
+      name: MAILTO
+      value: "{{ laravel_cron_failure_address }}"
+  - name: Add cron job for laravel
+    cron:
+      name: Laravel Periodic Tasks
+      job: "cd {{ laravel_app_path }}/current && /usr/bin/php artisan schedule:run >> /dev/null 2>&1"
+  become: true
+    

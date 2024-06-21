@@ -1,0 +1,15 @@
+- name: Copy Laravel Horizon systemd service file
+  template:
+    src: "horizon-service.j2"
+    dest: /etc/systemd/system/laravel-horizon.service
+    owner: root
+    group: root
+    mode: '0644'
+- name: Enable Laravel Horizon service
+  systemd:
+    name: laravel-horizon
+    enabled: yes
+- name: Start Laravel Horizon service
+  systemd:
+    name: laravel-horizon
+    state: started
