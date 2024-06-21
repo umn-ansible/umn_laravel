@@ -41,6 +41,7 @@ php_packages:
   - "php{{ php_version }}-syspaths"
   - "php{{ php_version }}-php-redis"
   - "php{{ php_version }}-php-process"
+  - "php{{ php_version }}-php-zip"
   - "{{ 'php' + php_version|string + '-php-oci8' if laravel_require_oracle | bool else '' }}"
 
 php_enablerepo: "remi"
