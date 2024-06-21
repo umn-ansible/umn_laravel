@@ -29,18 +29,6 @@ laravel_require_oracle: false
 
 laravel_cron_failure_address: 
 
-php_enablerepo: "remi"
-php_webserver_daemon: "nginx"
-php_enable_php_fpm: true
-php_fpm_pool_user: "nginx"
-php_fpm_pool_group: "nginx"
-php_fpm_daemon: "php{{php_version}}-php-fpm"
-php_conf_paths: 
-  - "/etc/opt/remi/php{{php_version}}"
-php_extension_conf_paths: 
-  - "/etc/opt/remi/php{{php_version}}/php.d"
-php_fpm_pool_conf_path: "/etc/opt/remi/php{{php_version}}/php-fpm.d/www.conf"
-
 php_version: 83
 php_packages: 
   - "php{{ php_version }}"
