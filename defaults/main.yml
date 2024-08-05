@@ -27,7 +27,8 @@ laravel_require_horizon: false
 laravel_require_queue: false
 laravel_require_oracle: false
 
-laravel_cron_failure_address: 
+laravel_cron_failure_address:
+laravel_env_additions: 
 
 php_version: 83
 php_packages_unfiltered: 
