@@ -30,7 +30,7 @@ laravel_require_oracle: false
 laravel_cron_failure_address: 
 
 php_version: 83
-php_packages: 
+php_packages_unfiltered: 
   - "php{{ php_version }}"
   - "php{{ php_version }}-php-cli"
   - "php{{ php_version }}-php-common"
@@ -44,3 +44,4 @@ php_packages:
   - "php{{ php_version }}-php-zip"
   - "{{ 'php' + php_version|string + '-php-oci8' if laravel_require_oracle | bool else '' }}"
 
+php_packages:  "{{ php_packages_unfiltered | reject('equalto', '') | list }}"
