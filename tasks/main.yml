@@ -4,8 +4,8 @@
   - name: "Oracle instant client"
     yum:
       name:
-        - "https://download.oracle.com/otn_software/linux/instantclient/2112000/el9/oracle-instantclient-basic-21.12.0.0.0-1.el9.x86_64.rpm"
-        - "https://download.oracle.com/otn_software/linux/instantclient/2112000/el9/oracle-instantclient-devel-21.12.0.0.0-1.el9.x86_64.rpm"
+        - "https://download.oracle.com/otn_software/linux/instantclient/2350000/oracle-instantclient-basic-23.5.0.24.07-1.el9.x86_64.rpm"
+        - "https://download.oracle.com/otn_software/linux/instantclient/2350000/oracle-instantclient-devel-23.5.0.24.07-1.el9.x86_64.rpm"
       disable_gpg_check: true
       state: "present"
     when: laravel_require_oracle
