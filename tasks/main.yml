@@ -43,6 +43,14 @@
       permissions: "rwx"
       state: "present"
       default: yes
+  - name: "set an ACL so the deploy user has write access to storage for new files"
+    acl:
+      path: "/var/www/{{ appname_short}}/shared/storage"
+      entity: "{{ laravel_deploy_user  }}"
+      etype: "user"
+      permissions: "rwx"
+      state: "present"
+      default: yes
   - name: copy in laravel env file
     template:
       src: "env.j2"
