@@ -22,6 +22,8 @@ session_lifetime: 240
 queue_driver: sync
 mail_hostname: smtp.umn.edu
 sentry_dsn: ""
+sentry_samplerate: 0
+sentry_profilerate: 0
 
 laravel_require_horizon: false
 laravel_require_queue: false
