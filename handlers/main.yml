@@ -1,7 +1,7 @@
 ---
 - name: cache artisan
   become: true
-  become_user: laravel_deploy_user
+  become_user: "{{ laravel_deploy_user}}"
   command: /usr/bin/php artisan config:cache
   args:
     chdir: "{{ laravel_app_path }}"
