@@ -1,6 +1,18 @@
 ---
 - name: cache artisan
-  shell: "cd {{ laravel_app_path }} && su -c '/usr/bin/php artisan config:cache' {{ laravel_deploy_user }}"
-  ignore_errors: True
+  become: true
+  become_user: laravel_deploy_user
+  command: /usr/bin/php artisan config:cache
+  args:
+    chdir: "{{ laravel_app_path }}"
+  register: artisan_cache_output
+  ignore_errors: false
+  tags:
+    - password
+
+- name: Debug artisan cache output
+  debug:
+    var: artisan_cache_output
+  when: artisan_cache_output is defined
   tags:
     - password
