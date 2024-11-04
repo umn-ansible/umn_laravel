@@ -16,3 +16,4 @@
   when: artisan_cache_output is defined
   tags:
     - password
+    

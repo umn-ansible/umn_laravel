@@ -62,6 +62,8 @@
       mode: "0644"
     notify:
       - cache artisan
+    tags:
+      - password
   - name: include horizon
     include_tasks: horizon.yml
     when: laravel_require_horizon
