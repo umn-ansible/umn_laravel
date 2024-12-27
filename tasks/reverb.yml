@@ -1,0 +1,19 @@
+- name: Install PHP-ev
+  yum:
+    name: php{{ php_version }}-php-pecl-ev
+    state: "present"
+- name: Copy Laravel Reverb systemd service file
+  template:
+    src: "reverb-service.j2"
+    dest: /etc/systemd/system/laravel-reverb.service
+    owner: root
+    group: root
+    mode: '0644'
+- name: Enable Laravel Reverb service
+  systemd:
+    name: laravel-reverb
+    enabled: yes
+- name: Start Laravel Reverb service
+  systemd:
+    name: laravel-reverb
+    state: started

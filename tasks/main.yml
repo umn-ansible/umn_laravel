@@ -67,6 +67,9 @@
   - name: include horizon
     include_tasks: horizon.yml
     when: laravel_require_horizon
+  - name: include reberb
+    include_tasks: reverb.yml
+    when: laravel_require_reberb
   - name: include queue worker
     include_tasks: queue.yml
     when: laravel_require_queue

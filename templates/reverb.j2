@@ -1,0 +1,13 @@
+# laravel-reverb.service
+[Unit]
+Description=Laravel Reverb
+After=network.target
+
+[Service]
+User={{ laravel_service_user }}
+Group={{ laravel_service_group }}
+Restart=always
+ExecStart=/usr/bin/php {{laravel_app_path}}artisan reverb:start
+
+[Install]
+WantedBy=multi-user.target
