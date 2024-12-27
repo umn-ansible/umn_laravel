@@ -26,7 +26,7 @@ sentry_samplerate: 0
 sentry_profilerate: 0
 
 laravel_require_horizon: false
-laravel_require_reberb: false
+laravel_require_reverb: false
 laravel_require_queue: false
 laravel_require_oracle: false
 
