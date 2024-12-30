@@ -15,9 +15,9 @@ db_port: 3306
 db_database:
 db_username:
 db_password:
-broadcast_driver: file
-cache_driver: file
-session_driver: file 
+broadcast_driver: redis
+cache_driver: redis
+session_driver: redis 
 session_lifetime: 240
 queue_driver: sync
 mail_hostname: smtp.umn.edu
@@ -50,47 +50,6 @@ php_packages_unfiltered:
 
 php_packages:  "{{ php_packages_unfiltered | reject('equalto', '') | list }}"
 
-nginx_vhosts:
-  - listen: "80"
-    server_name: "{{ hostname }}"
-    return: "301 https://{{hostname}}$request_uri"
-    filename: "{{hostname}}.80.conf"
-  - listen: "443 ssl http2"
-    server_name: "{{ hostname }}"
-    root: "{{laravel_app_path}}/public/"
-    index: "index.php index.html index.htm"
-    state: "present"
-    # realpath param in nginx config is necessary so that it reloads files when symlink is updated
-    extra_parameters: |
-      location ~ \.php$ {
-          fastcgi_split_path_info ^(.+\.php)(/.+)$;
-          fastcgi_pass 127.0.0.1:9000;
-          fastcgi_index index.php;
-          fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-          include fastcgi_params;
-      }
-      location / {
-        try_files $uri $uri/ /index.php?$query_string;
-        
-        proxy_http_version 1.1;
-        proxy_set_header Host $http_host;
-        proxy_set_header Scheme $scheme;
-        proxy_set_header SERVER_PORT $server_port;
-        proxy_set_header REMOTE_ADDR $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_pass http://0.0.0.0:8080;
-      }
-      error_page 404 /index.php;
-      location = /favicon.ico { access_log off; log_not_found off; }
-      location = /robots.txt  { access_log off; log_not_found off; }
-      location ~ /\.(?!well-known).* {
-        deny all;
-      }
-      ssl_certificate     /etc/letsencrypt/live/{{hostname}}/fullchain.pem;
-      ssl_certificate_key /etc/letsencrypt/live/{{hostname}}/privkey.pem;
-      ssl_protocols       TLSv1.1 TLSv1.2;
-      ssl_ciphers         HIGH:!aNULL:!MD5;
 
-nginx_remove_default_vhost: true
+reverb_key: 
+reverb_secret: 

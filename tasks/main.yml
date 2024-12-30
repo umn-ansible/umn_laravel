@@ -53,6 +53,28 @@
       state: "present"
       default: true
       recursive: true
+  - name: "Grant service user permissions to write to var/www/<appname_short> using an acl"
+    acl:
+      path: "/var/www/{{ appname_short }}/"
+      entity: "{{ laravel_service_user }}"
+      etype: "user"
+      permissions: "rwx"
+      state: "present"
+      default: true
+      recursive: true
+  - name: "Grant service user permissions to write to var/www/<appname_short> using an acl"
+    acl:
+      path: "/var/www/{{ appname_short }}/"
+      entity: "{{ laravel_service_user }}"
+      etype: "user"
+      permissions: "rwx"
+      state: "present"
+      default: false
+      recursive: true
+    when: deploy_user != None
+  - name: include reverb
+    include_tasks: reverb.yml
+    when: laravel_require_reverb
   - name: copy in laravel env file
     template:
       src: "env.j2"
@@ -67,9 +89,6 @@
   - name: include horizon
     include_tasks: horizon.yml
     when: laravel_require_horizon
-  - name: include reverb
-    include_tasks: reverb.yml
-    when: laravel_require_reverb
   - name: include queue worker
     include_tasks: queue.yml
     when: laravel_require_queue

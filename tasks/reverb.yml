@@ -2,6 +2,8 @@
   yum:
     name: php{{ php_version }}-php-pecl-ev
     state: "present"
+- name: Set broadcast_driver to reverb
+  ansible.builtin.set_fact: broadcast_driver="reverb"
 - name: Copy Laravel Reverb systemd service file
   template:
     src: "reverb.j2"
@@ -17,3 +19,8 @@
   systemd:
     name: laravel-reverb
     state: started
+- name: Raise limits for service user
+  lineinfile:
+    path: /etc/security/limits.conf
+    state: present
+    line: "{{ laravel_service_user }} soft nofile 65535\n{{ laravel_service_user }} hard nofile 65535"
