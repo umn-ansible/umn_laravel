@@ -8,6 +8,7 @@ User={{ laravel_service_user }}
 Group={{ laravel_service_group }}
 Restart=always
 ExecStart=/usr/bin/php {{laravel_app_path}}artisan queue:work --sleep 0.1 --tries=3 --daemon --env=production
+PartOf=redis.service
 
 [Install]
 WantedBy=multi-user.target

@@ -8,7 +8,8 @@ User={{ laravel_service_user }}
 Group={{ laravel_service_group }}
 Restart=always
 ExecStart=/usr/bin/php {{laravel_app_path}}artisan reverb:start
-LimitNOFILE=20000
+LimitNOFILE=30000
+PartOf=redis.service
 
 [Install]
 WantedBy=multi-user.target
