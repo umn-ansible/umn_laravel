@@ -33,7 +33,7 @@ laravel_require_oracle: false
 laravel_cron_failure_address:
 laravel_env_additions:
 
-php_version: 83
+php_version: 84
 php_packages_unfiltered: 
   - "php{{ php_version }}"
   - "php{{ php_version }}-php-cli"
