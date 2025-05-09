@@ -75,6 +75,12 @@
   - name: include reverb
     include_tasks: reverb.yml
     when: laravel_require_reverb
+  - name: include horizon
+    include_tasks: horizon.yml
+    when: laravel_require_horizon
+  - name: include queue worker
+    include_tasks: queue.yml
+    when: laravel_require_queue
   - name: copy in laravel env file
     template:
       src: "env.j2"
@@ -86,12 +92,6 @@
       - cache artisan
     tags:
       - password
-  - name: include horizon
-    include_tasks: horizon.yml
-    when: laravel_require_horizon
-  - name: include queue worker
-    include_tasks: queue.yml
-    when: laravel_require_queue
   - name: Email cron failure to us
     cronvar:
       name: MAILTO

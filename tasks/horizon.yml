@@ -13,3 +13,5 @@
   systemd:
     name: laravel-horizon
     state: started
+- name: "set the variable queue_driver to redis"
+  ansible.builtin.set_fact: queue_driver="redis"
