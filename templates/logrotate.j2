@@ -1,5 +1,5 @@
 {{ laravel_app_path }}/storage/logs/*log {
-    su nginx root
+    su {{laravel_deploy_user}} {{laravel_deploy_user}}
     weekly
     missingok
     rotate 14
