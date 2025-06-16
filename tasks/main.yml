@@ -100,5 +100,13 @@
     cron:
       name: Laravel Periodic Tasks
       job: "cd {{ laravel_app_path }} && /usr/bin/php artisan schedule:run >> /dev/null 2>&1"
+  - name: Install logrotate configuration
+    template:
+      src: logrotate.j2
+      dest: "/etc/logrotate.d/laravel-{{ laravel_appname }}"
+      owner: root
+      group: root
+      mode: '0644'
+    notify: reload logrotate
   become: true
-    
+  

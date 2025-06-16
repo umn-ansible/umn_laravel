@@ -17,3 +17,6 @@
   tags:
     - password
     
+- name: reload logrotate
+  command: logrotate -f /etc/logrotate.conf
+  become: yes
