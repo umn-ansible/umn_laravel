@@ -108,5 +108,11 @@
       group: root
       mode: '0644'
     notify: reload logrotate
+  - name: "make sure the laravel.log file is owned by the deploy user"
+    file:
+      path: "/var/www/{{ appname_short }}/shared/storage/logs/laravel.log"
+      owner: "{{ laravel_deploy_user }}"
+      group: "{{ laravel_deploy_group }}"
+      state: file
   become: true
   
