@@ -5,9 +5,5 @@
     compress
     delaycompress
     notifempty
-    create 0640 {{ latis_deploy }} {{ latis_deploy }}
-    sharedscripts
-    postrotate
-        systemctl reload php{{php_version}}-php-fpm
-    endscript
+    copytruncate
 } 
