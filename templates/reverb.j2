@@ -1,7 +1,9 @@
 # laravel-reverb.service
 [Unit]
 Description=Laravel Reverb
-After=network.target
+After=network.target redis.service
+Requires=redis.service
+PartOf=redis.service
 
 [Service]
 User={{ laravel_service_user }}
