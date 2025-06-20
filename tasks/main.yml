@@ -114,10 +114,10 @@
       owner: "{{ laravel_deploy_user }}"
       group: "{{ laravel_deploy_group }}"
       state: file
-  - name: "deploy the custom 503 page"
+  - name: "deploy the custom 502 page"
     template:
-      src: "503.j2"
-      dest: "/var/www/{{ appname_short }}/shared/storage/503.html"
+      src: "502.j2"
+      dest: "/var/www/{{ appname_short }}/shared/storage/502.html"
       owner: "{{ laravel_deploy_user }}"
       group: "{{ laravel_deploy_group }}"
       mode: "0644"
