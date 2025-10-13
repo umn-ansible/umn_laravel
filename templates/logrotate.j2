@@ -1,4 +1,4 @@
-{{ laravel_app_path }}/storage/logs/*log {
+/var/www/{{appname_short}}/shared/storage/logs/*log {
     su {{laravel_deploy_user}} {{laravel_deploy_user}}
     weekly
     missingok
