@@ -108,6 +108,11 @@
       group: root
       mode: '0644'
     notify: reload logrotate
+  - name: Set SELinux context for log file
+    sefcontext:
+      target: "/var/www/{{ appname_short }}/shared/storage/logs(/.*)?"
+      setype: "var_log_t"
+      state: "present"
   - name: "make sure the laravel.log file is owned by the deploy user"
     file:
       path: "/var/www/{{ appname_short }}/shared/storage/logs/laravel.log"
