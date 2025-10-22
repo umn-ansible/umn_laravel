@@ -111,7 +111,7 @@
   - name: Set SELinux context for log file
     sefcontext:
       target: "/var/www/{{ appname_short }}/shared/storage/logs(/.*)?"
-      setype: "var_log_t"
+      setype: "httpd_sys_rw_content_t"
       state: "present"
   - name: "make sure the laravel.log file is owned by the deploy user"
     file:
