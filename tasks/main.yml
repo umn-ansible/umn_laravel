@@ -117,6 +117,14 @@
       target: "/var/www/{{ appname_short }}/shared/storage/logs(/.*)?"
       setype: "httpd_log_t"
       state: "present"
+  - name: "create laravel.log if missing"
+    copy:
+      content: ""
+      dest: "/var/www/{{ appname_short }}/shared/storage/logs/laravel.log"
+      owner: "{{ laravel_deploy_user }}"
+      group: "{{ laravel_deploy_group }}"
+      mode: "0644"
+      force: no
   - name: "make sure the laravel.log file is owned by the deploy user"
     file:
       path: "/var/www/{{ appname_short }}/shared/storage/logs/laravel.log"
