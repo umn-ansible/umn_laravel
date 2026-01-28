@@ -13,8 +13,8 @@
     ansible.builtin.include_role:
       name: geerlingguy.php
   - name: "Install nodejs repo"
-    shell: "curl -fsSL https://rpm.nodesource.com/setup_22.x | sudo bash -"
-  - name: "Install node 22"
+    shell: "curl -fsSL https://rpm.nodesource.com/setup_{{ laravel_nodejs_version }}.x | sudo bash -"
+  - name: "Install node {{ laravel_nodejs_version }}"
     yum:
       name: "nodejs"
       state: "present"
