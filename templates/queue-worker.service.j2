@@ -9,7 +9,7 @@ PartOf=redis.service
 User={{ laravel_service_user }}
 Group={{ laravel_service_group }}
 Restart=always
-ExecStart=/usr/bin/php {{laravel_app_path}}artisan queue:work --sleep 0.1 --tries=3 --max-time=3500 --env=production
+ExecStart=/usr/bin/php {{laravel_app_path}}artisan queue:work --sleep 0.1 --tries=3 --env=production
 PartOf=redis.service
 
 [Install]
