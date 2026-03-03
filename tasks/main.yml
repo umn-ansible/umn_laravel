@@ -130,7 +130,7 @@
       dest: "/var/www/{{ appname_short }}/shared/storage/logs/laravel.log"
       owner: "{{ laravel_deploy_user }}"
       group: "{{ laravel_deploy_group }}"
-      mode: "0644"
+      mode: "0777"
       force: no
   - name: "make sure the laravel.log file is owned by the deploy user"
     file:
