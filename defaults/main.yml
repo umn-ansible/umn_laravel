@@ -16,6 +16,7 @@ db_database:
 db_username:
 db_password:
 broadcast_driver: redis
+broadcast_connection: null
 cache_driver: redis
 session_driver: redis 
 session_lifetime: 240
