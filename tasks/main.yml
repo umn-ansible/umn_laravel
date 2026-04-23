@@ -72,6 +72,23 @@
       default: false
       recursive: true
     when: deploy_user != None
+  - name: "Set rwx mask for storage/app/exports so that the deploy user can write to it"
+    acl:
+      path: "/var/www/{{ appname_short }}/shared/storage/app/exports"
+      entity: ""
+      etype: mask
+      permissions: rwx
+      state: present
+      recursive: true
+  - name: "Set rwx mask for storage/app/exports so that the deploy user can write to it"
+    acl:
+      path: "/var/www/{{ appname_short }}/shared/storage/app/exports"
+      entity: ""
+      etype: mask
+      permissions: rwx
+      state: present
+      recursive: true
+      default: true
   - name: include reverb
     include_tasks: reverb.yml
     when: laravel_require_reverb
