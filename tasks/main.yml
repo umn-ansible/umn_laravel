@@ -72,6 +72,13 @@
       default: false
       recursive: true
     when: deploy_user != None
+  - name: "Create storage/app/exports directory"
+    file:
+      path: "/var/www/{{ appname_short }}/shared/storage/app/exports"
+      state: directory
+      owner: "{{ laravel_deploy_user }}"
+      group: "{{ laravel_deploy_group }}"
+      mode: "0777"
   - name: "Set rwx mask for storage/app/exports so that the deploy user can write to it"
     acl:
       path: "/var/www/{{ appname_short }}/shared/storage/app/exports"
