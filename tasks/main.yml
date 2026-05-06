@@ -33,8 +33,31 @@
   - name: "Include the geerlingguy.php role"
     ansible.builtin.include_role:
       name: geerlingguy.php
+  - name: "if the version is php 85, edit the /etc/php.d/10-opcache.ini file and remove the zend_extension=opcache.so line"
+    ansible.builtin.lineinfile:
+      path: "/etc/php.d/10-opcache.ini"
+      regexp: "^zend_extension=opcache.so$"
+      state: absent
+    when: php_version == 85
+  - name: "Set installed Node.js major version fact"
+    ansible.builtin.set_fact:
+      installed_node_version: "{{ ansible_facts.packages['nodejs'][0].version.split('.')[0] }}"
+    when: "'nodejs' in ansible_facts.packages"
+
+  - name: "Remove old Node.js before installing node{{ laravel_nodejs_version }}"
+    ansible.builtin.yum:
+      name: "nodejs"
+      state: absent
+    when:
+      - installed_node_version is defined
+      - installed_node_version != laravel_nodejs_version | string
+
   - name: "Install nodejs repo"
-    shell: "curl -fsSL https://rpm.nodesource.com/setup_{{ laravel_nodejs_version }}.x | sudo bash -"
+    ansible.builtin.shell: "curl -fsSL https://rpm.nodesource.com/setup_{{ laravel_nodejs_version }}.x | sudo bash -"
+    when: >
+      installed_node_version is not defined or
+      installed_node_version != laravel_nodejs_version | string
+
   - name: "Install node {{ laravel_nodejs_version }}"
     yum:
       name: "nodejs"
