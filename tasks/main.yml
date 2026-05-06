@@ -9,6 +9,27 @@
       disable_gpg_check: true
       state: "present"
     when: laravel_require_oracle
+  - name: "Gather installed package facts"
+    ansible.builtin.package_facts:
+      manager: rpm
+
+  - name: "Find currently installed PHP version packages"
+    ansible.builtin.set_fact:
+      installed_php_packages: "{{ ansible_facts.packages.keys() | select('match', '^php\\d+$') | list }}"
+
+  - name: "Set installed PHP version fact"
+    ansible.builtin.set_fact:
+      installed_php_version: "{{ installed_php_packages[0] | regex_replace('^php(\\d+)$', '\\1') }}"
+    when: installed_php_packages | length > 0
+
+  - name: "Remove old PHP packages before installing php{{ php_version }}"
+    ansible.builtin.yum:
+      name: "php{{ installed_php_version }}*"
+      state: absent
+    when:
+      - installed_php_version is defined
+      - installed_php_version != php_version | string
+
   - name: "Include the geerlingguy.php role"
     ansible.builtin.include_role:
       name: geerlingguy.php
