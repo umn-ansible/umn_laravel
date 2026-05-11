@@ -13,6 +13,13 @@
     ansible.builtin.package_facts:
       manager: rpm
 
+  - name: "Validate hcp_env for env-scoped Vault lookups"
+    ansible.builtin.assert:
+      that:
+        - hcp_env is defined
+        - hcp_env | trim | length > 0
+      fail_msg: "hcp_env must be set to an environment value (for example: dev, tst, prd) for env-scoped Vault lookups."
+
   - name: "Find currently installed PHP version packages"
     ansible.builtin.set_fact:
       installed_php_packages: "{{ ansible_facts.packages.keys() | select('match', '^php\\d+$') | list }}"
